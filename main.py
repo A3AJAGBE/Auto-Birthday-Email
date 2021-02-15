@@ -37,13 +37,16 @@ if today in data_dict:
         # Replace the placeholder with the person's name
         letter = content.replace(PLACEHOLDER, person['name'])
 
+        # Get a random quote
+        with open("quotes.txt") as quote_data:
+            quotes = quote_data.readlines()
+            quote = random.choice(quotes)
+
         # Send the birthday email
         with smtplib.SMTP("smtp.gmail.com") as conn:
             conn.starttls()
             conn.login(user=my_email, password=password)
             conn.sendmail(from_addr=my_email,
                           to_addrs=person['email'],
-                          msg=f"Subject:Happy Birthday {person['name']}!!!\n\n{letter}")
-
-
+                          msg=f"Subject:Happy Birthday {person['name']}!!!\n\n{letter}\n{quote}")
 
