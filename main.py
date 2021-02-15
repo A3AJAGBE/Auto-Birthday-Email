@@ -13,5 +13,5 @@ conn.starttls()
 conn.login(user=my_email, password=password)
 conn.sendmail(from_addr=my_email,
               to_addrs=receiver_email,
-              msg="Testing python smtp connections")
+              msg="Subject:Testing\n\nTesting python smtp connections")
 conn.close()
