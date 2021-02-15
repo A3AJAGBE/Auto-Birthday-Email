@@ -1,6 +1,15 @@
+import smtplib
+import os
 import datetime as dt
 import pandas as pd
 import random
+
+from dotenv import load_dotenv
+load_dotenv()
+
+# Default email information
+my_email = os.environ.get("GMAIL")
+password = os.environ.get("GMAIL_PASS")
 
 # Get the current day and month
 current = dt.datetime.now()
@@ -27,6 +36,14 @@ if today in data_dict:
         content = template.read()
         # Replace the placeholder with the person's name
         letter = content.replace(PLACEHOLDER, person['name'])
-        print(letter)
+
+        # Send the birthday email
+        with smtplib.SMTP("smtp.gmail.com") as conn:
+            conn.starttls()
+            conn.login(user=my_email, password=password)
+            conn.sendmail(from_addr=my_email,
+                          to_addrs=person['email'],
+                          msg=f"Subject:Happy Birthday {person['name']}!!!\n\n{letter}")
+
 
 
